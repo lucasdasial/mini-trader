@@ -13,12 +13,12 @@
           label="Quantidade"
           type="number"
           color="teal"
-          v-model.number="quantidade"
+          v-model.number="quantidadeData"
         />
         <v-btn
           class="teal darken-2 white--text"
           @click="buyAcao"
-          :disabled="quantidade <= 0 || !Number.isInteger(quantidade)"
+          :disabled="quantidadeData < 0 || !Number.isInteger(quantidadeData)"
         >
           Comprar
         </v-btn>
@@ -28,22 +28,27 @@
 </template>
 
 <script>
+  import { mapActions } from "vuex";
   /* eslint-disable */
   export default {
     props: ["acao"],
     data() {
       return {
-        quantidade: 0,
+        quantidadeData: 0,
       };
     },
     methods: {
+      ...mapActions({ buyAcaoAction: "acoes/buyAcao" }),
       buyAcao() {
         const order = {
           acaoId: this.acao.id,
           acaoPrice: this.acao.price,
-          quantidade: this.quantidade,
+          quantidade: this.quantidadeData,
         };
-        this.quantidade = 0;
+
+        this.buyAcaoAction({ ...order });
+        // this.$store.dispatch("portfolio/buyAcao", { ...order });
+        this.quantidadeData = 0;
       },
     },
   };

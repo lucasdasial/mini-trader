@@ -21,7 +21,7 @@ export default new Router({
     {
       path: "/acoes",
       name: "acoes",
-      component: () => import("./components/acoes/AcoesDB.vue"),
+      component: () => import("./components/acoes/AcoesComponent.vue"),
     },
   ],
 });
